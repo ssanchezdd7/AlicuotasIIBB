@@ -215,7 +215,7 @@ Los gráficos y mapas se actualizarán automáticamente.
 
 Economista | Especialista en Gobernanza de Datos, Analítica e Inteligencia Artificial
 
-💼 https://www.linkedin.com/in/silsansj
+💼 [https://www.linkedin.com/in/silsansj](https://www.linkedin.com/in/silvana-s%C3%A1nchez-di-domenico/)
 
 💻 https://github.com/ssanchezdd7
 
