@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard de Alícuotas IIBB por Jurisdicción y Producto</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Ingresos Brutos · Argentina</p>
+      <h1>Dashboard de alícuotas por jurisdicción y producto</h1>
+      <p class="subtitle">Exploración interactiva de alícuotas 2026 con selección múltiple, comparación y mapa de calor provincial.</p>
+    </div>
+    <div class="sourcebox">
+      <strong>Datos</strong><span>Archivo JS externo conectado al HTML</span><small>data.js · no hay Excel embebido en el HTML</small>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel filters">
+      <div class="filter-group wide">
+        <label for="productSearch">Buscar producto / actividad</label>
+        <input id="productSearch" placeholder="Ej.: crédito, financiación, 649290..." />
+        <select id="productSelect" multiple size="8"></select>
+        <small>Tip: Ctrl/Cmd + clic para selección múltiple.</small>
+      </div>
+      <div class="filter-group">
+        <label for="jurisdictionSearch">Buscar jurisdicción</label>
+        <input id="jurisdictionSearch" placeholder="Ej.: San Juan" />
+        <select id="jurisdictionSelect" multiple size="8"></select>
+        <button id="selectAllJurisdictions">Seleccionar todas</button>
+        <button id="clearFilters" class="ghost">Limpiar filtros</button>
+      </div>
+      <div class="filter-group">
+        <label>Modo de cálculo</label>
+        <div class="radio-stack">
+          <label><input type="radio" name="metricMode" value="avg" checked> Promedio</label>
+          <label><input type="radio" name="metricMode" value="max"> Máxima</label>
+          <label><input type="radio" name="metricMode" value="min"> Mínima</label>
+        </div>
+        <label for="topN">Ranking visible</label>
+        <input id="topN" type="range" min="5" max="24" value="15"/>
+        <span id="topNLabel">15 jurisdicciones</span>
+      </div>
+    </section>
+
+    <section class="kpis">
+      <article><span>Registros filtrados</span><strong id="kpiRows">0</strong></article>
+      <article><span>Jurisdicciones</span><strong id="kpiJur">0</strong></article>
+      <article><span>Productos</span><strong id="kpiProd">0</strong></article>
+      <article><span>Alícuota seleccionada</span><strong id="kpiAvg">0%</strong></article>
+    </section>
+
+    <section class="grid two">
+      <div class="panel">
+        <div class="panel-title">
+          <h2>Mapa de calor por provincia</h2>
+          <p>Color según la alícuota del producto seleccionado.</p>
+        </div>
+        <div id="mapStatus" class="status"></div>
+        <svg id="argMap" viewBox="0 0 760 980" role="img" aria-label="Mapa de calor de Argentina"></svg>
+      </div>
+      <div class="panel">
+        <div class="panel-title">
+          <h2>Comparación por jurisdicción</h2>
+          <p>Ranking de alícuotas según el modo elegido.</p>
+        </div>
+        <canvas id="barChart"></canvas>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="panel">
+        <div class="panel-title"><h2>Distribución de alícuotas</h2><p>Frecuencia por rango porcentual.</p></div>
+        <canvas id="histChart"></canvas>
+      </div>
+      <div class="panel">
+        <div class="panel-title"><h2>Productos seleccionados</h2><p>Comparación promedio por actividad.</p></div>
+        <canvas id="productChart"></canvas>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-title table-head">
+        <div><h2>Tabla de comparación</h2><p>Resultados filtrados para análisis y control.</p></div>
+        <button id="downloadCsv">Descargar CSV filtrado</button>
+      </div>
+      <div class="table-wrap">
+        <table id="resultsTable">
+          <thead><tr><th>Jurisdicción</th><th>Actividad</th><th>Producto</th><th>Alícuota</th><th>Nota</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>Fuente: elaboración propia en base al archivo de alícuotas provisto. Visualización browser-only.</footer>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
